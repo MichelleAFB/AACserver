@@ -744,7 +744,7 @@ passport.use(new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL:'http://localhost:3002/auth/google/callback',
+    callbackURL:'https://aac-server.herokuapp.com/auth/google/callback',
     //passReqToCallback:true
   },
   function(accessToken, refreshToken, profile, done) {
@@ -786,7 +786,7 @@ app.get('/auth/google/callback' , passport.authenticate('google', {
   })
 
   app.get('/protected', (req,res) => {
-    res.redirect('http://localhost:3000/home')
+    res.redirect('https://aacdallasclient.netlify.app/home')
   })
 
   app.get('/auth/logout', (req,res,next) => {
@@ -795,7 +795,7 @@ app.get('/auth/google/callback' , passport.authenticate('google', {
       if(err){
         return next(err)
       }
-      res.redirect('http://localhost:3000/sign-in')
+      res.redirect('https://aacdallasclient.netlify.app/sign-in')
     })
    
   })
