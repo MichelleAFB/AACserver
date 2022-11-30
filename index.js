@@ -16,7 +16,7 @@ import denv from 'dotenv'
 import session from 'express-session'
 */
 
-const logger = require('logger')
+
 const dotenv = require('dotenv')
 dotenv.config({ path: './config/config.env'})
 const express= require('express')
