@@ -9,6 +9,14 @@ const router=express.Router()
 const cookie=require('universal-cookie')
 const bcrypt=require('bcrypt')
 const db=require("../config/db")
+const cors=require("cors")
+
+router.use(cors())
+router.use(app.use(cors({
+  origin:"https://aacdallasclient.netlify.app",
+  optionsSuccessStatus: 200
+})))
+
 
 
 
@@ -42,6 +50,7 @@ router.post("/sign-up", async(req, res) => {
 
 
 router.post("/sign-in", async(req, res) => {
+   const token=req.header(x-auth-token)
   const email = req.body.email;
   const password = req.body.password;
   const admin=req.body.admin
@@ -62,7 +71,7 @@ router.post("/sign-in", async(req, res) => {
           }
         } else {
           console.log('user does not exist')
-          res.json({ loggedIn: false, message: "User doesn't exist" });
+          res.json({ loggedIn: false, message: "User doesn't exist" }).status(200);
         }
       }
     );  
