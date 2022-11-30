@@ -3,12 +3,12 @@
 const mysql=require('mysql')
 
 
-const db=mysql.createConnection({
+const db_config={
   host:'us-cdbr-east-06.cleardb.net',
   user:'b9a25f42e722fd',
   password:'0331ec28',
   database:'heroku_74ccdb90d27e5ae'
-})
+}
 
 /*
 mysql://b9a25f42e722fd:0331ec28@us-cdbr-east-06.cleardb.net/heroku_74ccdb90d27e5ae?reconnect=true
@@ -17,4 +17,4 @@ mysql://b9a25f42e722fd:0331ec28@us-cdbr-east-06.cleardb.net/heroku_74ccdb90d27e5
 
 
 
-module.exports=db
+module.exports=db_config
