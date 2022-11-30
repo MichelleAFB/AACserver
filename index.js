@@ -120,51 +120,12 @@ async function downloadImage(url, filepath) {
 
 /////////////PROTECT//////////////////////
 app.get('/user/sign-in', (req,res) => {
-  axios.get("http://localhost:3002/user/sign-in").then((response) => {
+  axios.get("https://aac-server.herokuapp.com/user/sign-in").then((response) => {
     console.log(response.data)
   })
 })
 ///////get any new event https responses
-app.get("/init", (req,res) => {
-  console.log("hello")
-  const options = {
-    method: 'GET',
-    url: 'https://american-airlines-dallas-api.p.rapidapi.com/next10httprequests',
-    headers: {
-      'X-RapidAPI-Key': '00f165d168msh14ee358d2258223p12aa97jsne2c06db3d539',
-      'X-RapidAPI-Host': 'american-airlines-dallas-api.p.rapidapi.com'
-    }
-  };
-  
-  axios.request(options).then(function (response) {
-    const responses= response.data
 
-    Object.keys(responses).forEach(key => {
-      if(typeof(responses[key])=='string'){
-        db.query("SELECT * FROM http10events WHERE httprequest =?", responses[key],(err,results) => {
-          if(!err){
-            if(results.length<0 || results.length==0){
-              const http=responses[key]
-              const a=http.length-2
-              const b=http.length
-              const suffix=http.substring(a,b)
-              //console.log(http.substring(a,b))
-              db.query("INSERT INTO http10events (id,httprequest) VALUES (?,?) "
-                ,[suffix,http], (err,result2) => {
-                  if(!err){
-                    console.log("SUCCESS entering http reqs")
-                    //console.log(result2)
-                  }
-                })
-            }
-          }
-        })
-    }else{
-      console.log("null entry")
-    }
-   })
-  })
-})
 
 //********PROTECT******GOOD (11/23/22)/
 //(2) use after "/init"
@@ -575,7 +536,7 @@ app.get("/todaysEvent",(req,res) => {
 
  app.get("/publicEvents", (req,res) =>{
 
-  axios.get("http://localhost:3002/currentEvents").then((response) => {
+  axios.get("https://aac-server.herokuapp.com/currentEvents").then((response) => {
 
   const publicEvents=[]
 
