@@ -11,11 +11,8 @@ const bcrypt=require('bcrypt')
 const db=require("../config/db")
 const cors=require("cors")
 
-router.use(cors())
-router.use(app.use(cors({
-  origin:"https://aacdallasclient.netlify.app",
-  optionsSuccessStatus: 200
-})))
+
+
 
 
 
