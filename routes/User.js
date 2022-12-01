@@ -14,12 +14,6 @@ const cors=require("cors")
 
 
 
-
-
-
-
-
-
 router.post("/sign-up", async(req, res) => {
   const first = req.body.first;
   const last = req.body.last;
@@ -68,7 +62,7 @@ router.post("/sign-in", async(req, res) => {
           }
         } else {
           console.log('user does not exist')
-          res.json({ loggedIn: false, message: "User doesn't exist" }).status(200);
+          res.json({ loggedIn: false, message: "User doesn't exist" }).status(200)
         }
       }
     );  
