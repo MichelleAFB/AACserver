@@ -41,10 +41,7 @@ router.post("/sign-up", async(req, res) => {
 
 
 router.post("/sign-in", async(req, res) => {
-  res.header({
-    "Access-Control-Allow-Origin":"*",
-    "Access-Control-Allow-Methods": "POST,GET,OPTION,PUT,DELETE",
-  })
+  
    const token=req.header(x-auth-token)
   const email = req.body.email;
   const password = req.body.password;
