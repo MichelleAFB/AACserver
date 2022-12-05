@@ -1,6 +1,8 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "proxy":"http://localhost:3000",
+  "homepage":"http://localhost:3002",
   "description": "",
   "main": "index.js",
   "dependencies": {
@@ -151,6 +153,7 @@
     "htmlparser2": "^8.0.1",
     "http-errors": "^2.0.0",
     "http-proxy-agent": "^4.0.1",
+    "http-proxy-middleware": "^2.0.6",
     "https": "^1.0.0",
     "https-proxy-agent": "^5.0.1",
     "iconv-lite": "^0.4.24",

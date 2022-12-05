@@ -41,6 +41,7 @@ router.post("/sign-up", async(req, res) => {
 
 
 router.post("/sign-in", async(req, res) => {
+  res.json(req.body)
    const token=req.header(x-auth-token)
   const email = req.body.email;
   const password = req.body.password;

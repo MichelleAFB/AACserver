@@ -26,7 +26,7 @@ const cloudinary = require('cloudinary').v2
 const router=express.Router()
 
 
-
+const { createProxyMiddleware} = require("http-proxy-middleware")
 const passport=require('passport')
 const passportSetup=require('./config/passport')
 const cors=require('cors')
@@ -57,15 +57,7 @@ app.listen(process.env.PORT,()=> console.log("Server running ", process.env.PORT
 
 console.log(process.env.PORT)
 
-app.use(cors(), function(req, res, next) {
-  console.log("*********NEW CORS CONFIG***********")
-  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+
 
 
 var db
@@ -851,9 +843,14 @@ const connectdb = async () => {
 
 
 //console.log(connectdb)
-
+console.log("\n\n\nNNNNNNNEWVERSIOOJNNN\n\n\n\n")
 const EventModel=require('./models/EventModel')
 const { Console } = require('console')
+
+app.post("/test" ,(req,res) => {
+  const message= req.body.data
+  res.send("WORKD")
+})
 
 
 /*
