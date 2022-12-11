@@ -45,8 +45,8 @@ app.use(cors())
 app.use(express.json())
 const morgan=require('morgan')
 
-const db_config=require("./config/db")
-
+const db=require("./config/db")
+db.connect(() => console.log("db connected in index route"))
 /*
 if(process.env.NODE_ENV === 'development'){
   app.use(morgan('dev'))
@@ -57,33 +57,34 @@ app.listen(process.env.PORT,()=> console.log("Server running ", process.env.PORT
 
 console.log(process.env.PORT)
 
-
-
-
-var db
+console.log(db.state)
 
 function handleDisconnect() {
-  db = mysql.createConnection(db_config); // Recreate the connection, since
-                                                  // the old one cannot be reused.
-
-  db.connect(function(err) {              // The server is either down
-    if(err) {                                     // or restarting (takes a while sometimes).
-      console.log('error when connecting to db:', err);
-      setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
-    }                                     // to avoid a hot loop, and to allow our node script to
-  });                                     // process asynchronous requests in the meantime.
-                                          // If you're also serving http, display a 503 error.
-  db.on('error', function(err) {
-    console.log('db error', err);
-    if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-      handleDisconnect();                         // lost due to either server restart, or a
-    } else {                                      // connnection idle timeout (the wait_timeout
-      throw err;                                  // server variable configures this)
-    }
-  });
+   // Recreate the connection, since
+        if(db.state=="disconnected"){
+          db.connect(function(err) {              // The server is either down
+            if(err) {                                     // or restarting (takes a while sometimes).
+              console.log('error when connecting to db:', err);
+              setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
+            } else{
+              console.log("connection restablished")
+            }                                    // to avoid a hot loop, and to allow our node script to
+          });                                     // process asynchronous requests in the meantime.
+                                                  // If you're also serving http, display a 503 error.
+          db.on('error', function(err) {
+            console.log('db error', err);
+            if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
+              handleDisconnect();                         // lost due to either server restart, or a
+            } else {                                      // connnection idle timeout (the wait_timeout
+              throw err;                                  // server variable configures this)
+            }
+          });
+        }                                           // the old one cannot be re
+  
 }
 
-handleDisconnect();
+//handleDisconnect();
+
 
 
 //force db to keep connection alive
@@ -117,11 +118,7 @@ async function downloadImage(url, filepath) {
 }
 
 /////////////PROTECT//////////////////////
-app.get('/user/sign-in', (req,res) => {
-  axios.get("https://aac-server.herokuapp.com/user/sign-in").then((response) => {
-    console.log(response.data)
-  })
-})
+
 ///////get any new event https responses
 
 
@@ -848,7 +845,8 @@ const EventModel=require('./models/EventModel')
 const { Console } = require('console')
 
 app.post("/test" ,(req,res) => {
-  const message= req.body.data
+  //const message= req.body.data
+  console.log("TEST\n\n\n")
   res.send("WORKD")
 })
 

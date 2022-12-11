@@ -12,6 +12,8 @@ const db=require("../config/db")
 const cors=require("cors")
 
 
+db.connect(() => console.log("db connected in user route"))
+
 
 
 router.post("/sign-up", async(req, res) => {
@@ -41,8 +43,8 @@ router.post("/sign-up", async(req, res) => {
 
 
 router.post("/sign-in", async(req, res) => {
-  res.json(req.body)
-   const token=req.header(x-auth-token)
+
+  //const token=req.header(x-auth-token)
   const email = req.body.email;
   const password = req.body.password;
   const admin=req.body.admin
@@ -58,7 +60,7 @@ router.post("/sign-in", async(req, res) => {
         }
         if (results.length > 0) {
           if(bcrypt.compare(results[0].password,password)){
-            console.log("PASSWORD MATCH")
+            console.log("PASSWORD MATCH ")
             res.json({loggedIn:true,user:email})
           }
         } else {
@@ -75,7 +77,7 @@ router.post("/sign-in", async(req, res) => {
     (err, results) => {
       if (err) {
         console.log(err);
-        res.json({loggedIn:false,message:err.message})
+        res.json.status(200).send({loggedIn:false,message:err.message})
       }
       if (results.length > 0) {
         if(bcrypt.compare(results[0].password,password)){
